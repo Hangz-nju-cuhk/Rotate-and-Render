@@ -1,5 +1,5 @@
 python -u test_multipose.py  \
-        --names rs_ijba3 \
+        --names rs_model \
         --dataset example \
         --list_start 0 \
         --list_end  10 \
@@ -20,6 +20,6 @@ python -u test_multipose.py  \
         --label_mask \
         --align \
         --erode_kernel 21 \
-        --yaw_poses 0 0.258 \
-        --pitch_poses 0 0.258 \
+        --yaw_poses 0 \
+        --pitch_poses 0 \
 
