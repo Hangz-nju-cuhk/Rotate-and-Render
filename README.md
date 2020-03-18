@@ -10,6 +10,7 @@ photorealistic rotated faces using only single-view image collections
 in the wild. Our key insight is that rotating faces in the 3D space back and forth, 
 and re-rendering them to the 2D plane can serve as a strong self-supervision.
 
+<img src='./misc/pipeline.png' width=880>
 
 ## Requirements
 1. Basic requirements are listed in the 'requirements.txt'.
