@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ## DEMO
 ### Rotate faces with examples provided
 1. Download the [checkpoint](https://drive.google.com/file/d/1Vdlpwghjo4a9rOdn2iJEVlPd0EJegAex/view?usp=sharing)
-and put it in ```./checkpoints/rs_ijba3```.
+and put it in ```./checkpoints/rs_model```.
 
 2. Run a simple Rotate-and-Render demo.
 
