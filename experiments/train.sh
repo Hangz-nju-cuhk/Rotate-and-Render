@@ -1,5 +1,5 @@
 python -u train.py  \
-        --name rotatespade \
+        --name rs_model \
         --dataset_mode allface \
         --load_size 400 \
         --crop_size 256 \
