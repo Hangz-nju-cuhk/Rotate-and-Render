@@ -1,5 +1,5 @@
 python -u train.py  \
-        --name rs_model \
+        --name rotate \
         --dataset_mode allface \
         --load_size 400 \
         --crop_size 256 \
@@ -23,11 +23,11 @@ python -u train.py  \
         --heatmap_size 2.5 \
         --device_count 8 \
         --render_thread 3 \
-        --chunk_size 1 1 1 1 1 \
+        --chunk_size 2 4 4 4 4 \
         --no_gaussian_landmark \
         --landmark_align \
         --erode_kernel 15 \
         --pose_noise \
         # --face_vgg \
-        # --G_pretrain_path ./checkpoints/latest_net_G.pth \
-        # --D_pretrain_path ./checkpoints/latest_net_D.pth \
+        # --G_pretrain_path ./checkpoints/rs_model/latest_net_G.pth \
+        # --D_pretrain_path ./checkpoints/rs_model/latest_net_D.pth \
