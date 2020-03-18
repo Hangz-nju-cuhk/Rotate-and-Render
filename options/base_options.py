@@ -66,10 +66,9 @@ class BaseOptions():
         parser.add_argument('--use_vae', action='store_true', help='enable training with an image encoder.')
         parser.add_argument('--chunk_size', default=None, type=int, nargs='+', help='specify each gpus batch size')
         parser.add_argument('--render_thread', type=int, default=2, help='render thread')
-        parser.add_argument('--use_rotated_mesh', type=bool, default=True, help='whether to use rotated_mesh')
         parser.add_argument('--no_gaussian_landmark', action='store_true', help='whether to use no_gaussian_landmark (1.0 landmark)')
         parser.add_argument('--label_mask', action='store_true', help='whether to use face mask')
-        parser.add_argument('--heatmap_size', type=float, default=3, help='whether to use face mask')
+        parser.add_argument('--heatmap_size', type=float, default=3, help='the size of the heatmap')
         parser.add_argument('--erode_kernel', type=int, default=21, help='erode kernel size')
 
         self.initialized = True
