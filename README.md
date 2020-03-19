@@ -1,7 +1,8 @@
-# Rotate-and-Render: Unsupervised Photorealistic Face Rotation from Single-View Images (CVPR2020)
+# Rotate-and-Render: Unsupervised Photorealistic Face Rotation from Single-View Images (CVPR 2020)
 
 [Hang Zhou*](https://hangz-nju-cuhk.github.io/), Jihao Liu*, [Ziwei Liu](https://liuziwei7.github.io/), [Yu Liu](http://www.liuyu.us/), and [Xiaogang Wang](http://www.ee.cuhk.edu.hk/~xgwang/).
 
+[[Paper]](https://arxiv.org/abs/2003.08124)
 
 <img src='./misc/teaser.png' width=880>
 
@@ -22,7 +23,7 @@ pip install -r requirements.txt
 * Install the [Neural_Renderer](https://github.com/daniilidis-group/neural_renderer) following the instructions.
 
 
-* Our 3D models are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it.
+* Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it. Our 3D models are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). 
 
 
 ## DEMO
@@ -30,11 +31,11 @@ pip install -r requirements.txt
 1. Download the [checkpoint](https://drive.google.com/file/d/1Vdlpwghjo4a9rOdn2iJEVlPd0EJegAex/view?usp=sharing)
 and put it in ```./checkpoints/rs_model```.
 
-2. Run a simple Rotate-and-Render demo.
+2. Run a simple Rotate-and-Render demo, the inputs are stored at ```3ddfa/example```.
 
-* Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired sin(angle)s, choose 0 as frontal face.
+* Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired radians (range -pi/2 to pi/2), choose 0 as frontal face.
 
-* Run ```bash experiments/v100_test.sh```, results will be saved at ```./results/```
+* Run ```bash experiments/v100_test.sh```, results will be saved at ```./results/```.
 
 ## DEVELOP
 
@@ -42,7 +43,7 @@ Prepare your own dataset for testing and training.
 
 ### Preprocessing
 
-1. Save the 3D params of human faces to ```3ddfa/results``` by 3ddfa 
+1. Save the 3D params of human faces to ```3ddfa/results``` by 3ddfa.
 ```bash
 cd 3ddfa
 python inference.py --img_list example/file_list.txt --img_prefix example/Images --save_dir results
