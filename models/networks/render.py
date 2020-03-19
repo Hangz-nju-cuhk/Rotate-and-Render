@@ -116,8 +116,6 @@ class Render(object):
         u_shp = _load(osp.join(self.d, 'u_shp.npy'))
         u_exp = _load(osp.join(self.d, 'u_exp.npy'))
         self.keypoints = _load(osp.join(self.d, 'keypoints_sim.npy'))
-        # self.pose_noise = opt.get('pose_noise', False)
-        # self.large_pose = opt.get('large_pose', False)
         self.pose_noise = getattr(opt, 'pose_noise', False)
         self.large_pose = getattr(opt, 'large_pose', False)
         u = u_shp + u_exp
