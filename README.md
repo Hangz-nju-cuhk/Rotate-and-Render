@@ -72,7 +72,7 @@ For example the folder_level is 2 if a image is stored as ```prefix/label/image.
 
 ## Details of the Models
 
-The model in this repo is an upgraded one which is different from that described in our paper. A conditional batchnorm module is added according to landmarks predicted from the 3D face. For more details, please refer to our supplementary matrials.
+We provide two models with trainers in this repo, namely ```rotate``` and ```rotatespade```. The "rotatespade" model is an upgraded one which is different from that described in our paper. A conditional batchnorm module is added according to landmarks predicted from the 3D face. Our checkpoint is trained on this model. We have briefly describe this model in our supplymentary materials.
 
 ## License and Citation
 The usage of this software is under [CC-BY-4.0](https://github.com/Hangz-nju-cuhk/Rotate-and-Render/LICENSE).
