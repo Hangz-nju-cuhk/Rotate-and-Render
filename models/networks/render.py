@@ -116,11 +116,7 @@ class Render(object):
         u_shp = _load(osp.join(d, 'u_shp.npy'))
         u_exp = _load(osp.join(d, 'u_exp.npy'))
         self.keypoints = _load(osp.join(d, 'keypoints_sim.npy'))
-        self.texMU = _load(osp.join(d, 'texMU.npy'))  # 159645 * 1
-        self.texPC = _load(osp.join(d, 'texPC.npy'))  # 159645 * 199
-        self.texEV = _load(osp.join(d, 'texEV.npy'))  # 199 * 1
         self.keypoints = _load(osp.join(d, 'keypoints_sim.npy'))
-        self.n_tex_para = len(self.texEV)
         self.pose_noise = opt.pose_noise
         self.large_pose = opt.large_pose
         u = u_shp + u_exp
