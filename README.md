@@ -19,7 +19,7 @@ and re-rendering them to the 2D plane can serve as a strong self-supervision.
 pip install -r requirements.txt
 ```
 
-2. Install the [Neural_Renderer](https://github.com/hiroharu-kato/neural_renderer) following the instructions.
+2. Install the [Neural_Renderer](https://github.com/daniilidis-group/neural_renderer) following the instructions.
 
 
 3. Our 3D models are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it.
