@@ -15,4 +15,3 @@ checkpoints/
 .ftpconfig 
 3ddfa_release/train.configs
 sftp-config.json
-results
