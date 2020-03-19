@@ -19,5 +19,5 @@ python -u test_multipose.py  \
         --label_mask \
         --align \
         --erode_kernel 21 \
-        --yaw_poses 0 30 60 90 \
+        --yaw_poses 0 30 \
 
