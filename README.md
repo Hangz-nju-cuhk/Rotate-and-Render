@@ -1,6 +1,6 @@
 # Rotate-and-Render: Unsupervised Photorealistic Face Rotation from Single-View Images (CVPR2020)
 
-[Hang Zhou*](https://hangz-nju-cuhk.github.io/), Jihao Liu*, [Ziwei Liu](https://liuziwei7.github.io/), [Yu Liu](http://www.liuyu.us/), and [Xiaogang Wang](http://www.ee.cuhk.edu.hk/~xgwang/).
+[Hang Zhou*](https://hangz-nju-cuhk.github.io/), [Jihao Liu*](liujihao@sensetime.com), [Ziwei Liu](https://liuziwei7.github.io/), [Yu Liu](http://www.liuyu.us/), and [Xiaogang Wang](http://www.ee.cuhk.edu.hk/~xgwang/).
 
 
 <img src='./misc/teaser.png' width=880>
