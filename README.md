@@ -33,7 +33,7 @@ and put it in ```./checkpoints/rs_model```.
 
 2. Run a simple Rotate-and-Render demo, the inputs are stored at ```3ddfa/example```.
 
-* Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired radians (range -90 to 90), choose 0 as frontal face.
+* Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired degrees (range -90 to 90), choose 0 as frontal face.
 
 * Run ```bash experiments/v100_test.sh```, results will be saved at ```./results/```.
 
