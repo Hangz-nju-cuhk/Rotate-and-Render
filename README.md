@@ -23,7 +23,7 @@ pip install -r requirements.txt
 * Install the [Neural_Renderer](https://github.com/daniilidis-group/neural_renderer) following the instructions.
 
 
-* Our 3D models are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it.
+* Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it. Our 3D models are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). 
 
 
 ## DEMO
