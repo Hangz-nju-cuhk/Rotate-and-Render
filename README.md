@@ -2,6 +2,7 @@
 
 [Hang Zhou*](https://hangz-nju-cuhk.github.io/), Jihao Liu*, [Ziwei Liu](https://liuziwei7.github.io/), [Yu Liu](http://www.liuyu.us/), and [Xiaogang Wang](http://www.ee.cuhk.edu.hk/~xgwang/).
 
+[Paper](https://arxiv.org/abs/2003.08124)
 
 <img src='./misc/teaser.png' width=880>
 
