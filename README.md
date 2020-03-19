@@ -33,7 +33,7 @@ and put it in ```./checkpoints/rs_model```.
 
 2. Run a simple Rotate-and-Render demo.
 
-* Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired sin(angle)s (range -1 to 1), choose 0 as frontal face.
+* Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired radians (range -pi/2 to pi/2), choose 0 as frontal face.
 
 * Run ```bash experiments/v100_test.sh```, results will be saved at ```./results/```
 
