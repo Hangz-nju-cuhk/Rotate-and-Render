@@ -7,7 +7,6 @@ python -u test_multipose.py  \
         --gpu_ids 0,1 \
         --netG rotatespade \
         --norm_G spectralsyncbatch \
-        --batchSize 18 \
         --model rotatespade \
         --label_nc 5 \
         --nThreads 3 \
@@ -20,6 +19,5 @@ python -u test_multipose.py  \
         --label_mask \
         --align \
         --erode_kernel 21 \
-        --yaw_poses 0 0.17 \
-        --pitch_poses 0 0.17 \
+        --yaw_poses 0 30 60 90 \
 

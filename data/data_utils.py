@@ -109,11 +109,18 @@ class data_prefetcher():
         elif self.opt.yaw_poses is None and self.opt.pitch_poses is None:
             self.next_input = get_test_input(data, self.render_layer)
         else:
-            if self.opt.posesrandom:
-                if self.opt.yaw_poses is not None:
+            if self.opt.yaw_poses is not None:
+                if self.opt.posesrandom:
                     self.opt.yaw_poses = [round(np.random.uniform(-0.5, 0.5, 1)[0], 2) for k in range(len(self.opt.yaw_poses))]
-                if self.opt.pitch_poses is not None:
+            else:
+                self.opt.yaw_poses = []
+
+            if self.opt.pitch_poses is not None:
+                if self.opt.posesrandom:
                     self.opt.pitch_poses = [round(np.random.uniform(-0.5, 0.5, 1)[0], 2) for k in range(len(self.opt.pitch_poses))]
+            else:
+                self.opt.pitch_poses = []
+                
             self.next_input = get_multipose_test_input(data, self.render_layer, self.opt.yaw_poses, self.opt.pitch_poses)
         with torch.cuda.stream(self.stream):
             for k, v in self.next_input.items():

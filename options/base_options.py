@@ -1,5 +1,6 @@
 import sys
 import argparse
+import math
 import os
 from util import util
 import torch
@@ -26,7 +27,7 @@ class BaseOptions():
         parser.add_argument('--phase', type=str, default='train', help='train, val, test, etc')
         parser.add_argument('--device_count', type=int, default=8, help='how many gpus to run')
         # input/output sizes
-        parser.add_argument('--batchSize', type=int, default=1, help='input batch size')
+        # parser.add_argument('--batchSize', type=int, default=1, help='input batch size')
         parser.add_argument('--preprocess_mode', type=str, default='resize_and_crop', help='scaling and cropping of images at load time.', choices=("resize_and_crop", "crop", "scale_width", "scale_width_and_crop", "scale_shortside", "scale_shortside_and_crop", "fixed", "none"))
         parser.add_argument('--load_size', type=int, default=400, help='Scale images to this size. The final image will be cropped to --crop_size.')
         parser.add_argument('--crop_size', type=int, default=256, help='Crop to the width of crop_size (after initially scaling the images to load_size.)')
@@ -158,6 +159,17 @@ class BaseOptions():
         self.print_options(opt)
         if opt.isTrain:
             self.save_options(opt)
+
+        if not opt.isTrain:
+            # change radian to angle
+            if opt.yaw_poses is not None:
+                for pose in opt.yaw_poses:
+                    assert abs(pose) <= 90, "yaw pose must be between [-90, 90]"
+                opt.yaw_poses = [round(x / 180.0 * math.pi, 2) for x in opt.yaw_poses]
+            if opt.pitch_poses is not None:
+                for pose in opt.pitch_poses:
+                    assert abs(pose) <= 90, "pitch pose must be between [-90, 90]"
+                opt.pitch_poses = [round(x / 180.0 * math.pi, 2) for x in opt.pitch_poses]
 
         # Set semantic_nc based on the option.
         # This will be convenient in many places

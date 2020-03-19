@@ -8,7 +8,6 @@ python -u train.py  \
         --trainer rotatespade \
         --norm_D spectralsyncbatch \
         --norm_G spectralsyncbatch \
-        --batchSize 3 \
         --model rotatespade \
         --dataset 'example' \
         --lambda_D 0.75 \

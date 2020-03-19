@@ -15,8 +15,8 @@ class TestOptions(BaseOptions):
         parser.add_argument('--names', type=str, default='rs_ijba3', help='dataset')
         parser.add_argument('--multi_gpu', action='store_true', help='whether to use multi gpus')
         parser.add_argument('--align', action='store_true', help='whether to save align')
-        parser.add_argument('--yaw_poses', type=float, default=[], nargs='+', help='yaw poses list during testing')
-        parser.add_argument('--pitch_poses', type=float, default=[], nargs='+', help='pitch poses list during testing')
+        parser.add_argument('--yaw_poses', type=float, default=None, nargs='+', help='yaw poses list during testing')
+        parser.add_argument('--pitch_poses', type=float, default=None, nargs='+', help='pitch poses list during testing')
         parser.add_argument('--posesrandom', action='store_true', help='whether to random the poses')
 
 
