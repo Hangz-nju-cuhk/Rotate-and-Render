@@ -1,0 +1,17 @@
+__pycache__
+checkpoints/
+.ipynb_checkpoints
+.idea/
+*.tar.gz
+*.zip
+*.pkl
+*.pyc
+*.pth
+*.png
+*.tar
+***.npy
+*.npy
+.ftpconfig 
+3ddfa_release/train.configs
+sftp-config.json
+results

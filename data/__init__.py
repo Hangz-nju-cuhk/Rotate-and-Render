@@ -32,10 +32,8 @@ class dataset_info():
 
         dataset = opt.dataset.split(',')
         dataset_list = [self.dataset_names[dataset[i].lower()] for i in range(len(dataset))]
-        if opt.dataset_mode == 'single':
-            return dataset_list[0]
-        else:
-            return dataset_list
+        
+        return dataset_list
 
 
 def find_dataset_using_name(dataset_name):

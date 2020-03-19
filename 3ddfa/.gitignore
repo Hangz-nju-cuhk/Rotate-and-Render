@@ -1,4 +1,6 @@
 train.configs
+models
 *.npy
 *.pkl
+*.zip
 __pycache__

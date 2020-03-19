@@ -19,34 +19,7 @@ def _load(fp):
 class TestRender(Render):
 
     def __init__(self, opt):
-        self.opt = opt
-        self.render_size = opt.crop_size
-        d = '3ddfa/train.configs'
-        w_shp = _load(osp.join(d, 'w_shp_sim.npy'))
-        w_exp = _load(osp.join(d, 'w_exp_sim.npy'))  # simplified version
-        u_shp = _load(osp.join(d, 'u_shp.npy'))
-        u_exp = _load(osp.join(d, 'u_exp.npy'))
-        self.keypoints = _load(osp.join(d, 'keypoints_sim.npy'))
-        self.texMU = _load(osp.join(d, 'texMU.npy'))  # 159645 * 1
-        self.texPC = _load(osp.join(d, 'texPC.npy'))  # 159645 * 199
-        self.texEV = _load(osp.join(d, 'texEV.npy'))  # 199 * 1
-        self.keypoints = _load(osp.join(d, 'keypoints_sim.npy'))
-        self.n_tex_para = len(self.texEV)
-        u = u_shp + u_exp
-        # tri = sio.loadmat('/home/sensetime/Documents/3DDFA/visualize/tri.mat')['tri']   # 3 * 53215
-        tri = sio.loadmat('3ddfa/visualize/tri.mat')['tri']  # 3 * 53215
-        faces_np = np.expand_dims(tri.T, axis=0).astype(np.int32) - 1
-
-        self.std_size = 120
-
-        self.current_gpu = opt.gpu_ids
-        with torch.cuda.device(self.current_gpu):
-            self.faces = torch.from_numpy(faces_np).cuda()
-            self.renderer = nr.Renderer(camera_mode='look', image_size=self.render_size, perspective=False,
-                                        light_intensity_directional=0, light_intensity_ambient=1)
-            self.u_cuda = torch.from_numpy(u.astype(np.float32)).cuda()
-            self.w_shp_cuda = torch.from_numpy(w_shp.astype(np.float32)).cuda()
-            self.w_exp_cuda = torch.from_numpy(w_exp.astype(np.float32)).cuda()
+        super(TestRender, self).__init__(opt)
 
     def _parse_param(self, param, pose_noise=False, frontal=True, large_pose=False, pose=None):
         """Work for both numpy and tensor"""
@@ -80,7 +53,7 @@ class TestRender(Render):
         return p, offset, alpha_shp, alpha_exp, box, original_angle
 
 
-    def rotate_render(self, params, images, M=None, with_BG=False, random_color=False,
+    def rotate_render(self, params, images, M=None, with_BG=False,
                       pose_noise=False, large_pose=False, align=True, frontal=True, erode=True, grey_background=False, avg_BG=True, pose=None):
 
         bz, c, w, h = images.size()
@@ -101,7 +74,7 @@ class TestRender(Render):
         with torch.no_grad():
             for n in range(bz):
                 tex_a, vertice, vertice_out, vertice_in_ori_img, align_vertice, original_angle \
-                    = self._forward(params[n], images[n], M[n], random_color,
+                    = self._forward(params[n], images[n], M[n],
                                     pose_noise=pose_noise, align=align, frontal=frontal)
                 vertices.append(vertice)
                 vertices_out.append(vertice_out)

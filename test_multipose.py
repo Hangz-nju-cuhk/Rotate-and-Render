@@ -79,7 +79,7 @@ if __name__ == '__main__':
     opt = TestOptions().parse()
 
     data_info = data.dataset_info()
-    datanum = data_info.get_dataset(opt)
+    datanum = data_info.get_dataset(opt)[0]
     folderlevel = data_info.folder_level[datanum]
 
     dataloaders = data.create_dataloader_test(opt)

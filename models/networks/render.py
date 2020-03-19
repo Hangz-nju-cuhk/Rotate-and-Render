@@ -110,21 +110,17 @@ class Render(object):
     def __init__(self, opt):
         self.opt = opt
         self.render_size = opt.crop_size
-        d = './3ddfa/train.configs'
-        w_shp = _load(osp.join(d, 'w_shp_sim.npy'))
-        w_exp = _load(osp.join(d, 'w_exp_sim.npy'))  # simplified version
-        u_shp = _load(osp.join(d, 'u_shp.npy'))
-        u_exp = _load(osp.join(d, 'u_exp.npy'))
-        self.keypoints = _load(osp.join(d, 'keypoints_sim.npy'))
-        self.texMU = _load(osp.join(d, 'texMU.npy'))  # 159645 * 1
-        self.texPC = _load(osp.join(d, 'texPC.npy'))  # 159645 * 199
-        self.texEV = _load(osp.join(d, 'texEV.npy'))  # 199 * 1
-        self.keypoints = _load(osp.join(d, 'keypoints_sim.npy'))
-        self.n_tex_para = len(self.texEV)
-        self.pose_noise = opt.pose_noise
-        self.large_pose = opt.large_pose
+        self.d = './3ddfa/train.configs'
+        w_shp = _load(osp.join(self.d, 'w_shp_sim.npy'))
+        w_exp = _load(osp.join(self.d, 'w_exp_sim.npy'))  # simplified version
+        u_shp = _load(osp.join(self.d, 'u_shp.npy'))
+        u_exp = _load(osp.join(self.d, 'u_exp.npy'))
+        self.keypoints = _load(osp.join(self.d, 'keypoints_sim.npy'))
+        # self.pose_noise = opt.get('pose_noise', False)
+        # self.large_pose = opt.get('large_pose', False)
+        self.pose_noise = getattr(opt, 'pose_noise', False)
+        self.large_pose = getattr(opt, 'large_pose', False)
         u = u_shp + u_exp
-        # tri = sio.loadmat('/home/sensetime/Documents/3DDFA/visualize/tri.mat')['tri']   # 3 * 53215
         tri = sio.loadmat('./3ddfa/visualize/tri.mat')['tri']   # 3 * 53215
         faces_np = np.expand_dims(tri.T, axis=0).astype(np.int32) - 1
 
@@ -138,17 +134,6 @@ class Render(object):
             self.u_cuda = torch.from_numpy(u.astype(np.float32)).cuda()
             self.w_shp_cuda = torch.from_numpy(w_shp.astype(np.float32)).cuda()
             self.w_exp_cuda = torch.from_numpy(w_exp.astype(np.float32)).cuda()
-
-        # self.faces = torch.from_numpy(faces_np).cuda()
-        # self.renderer = nr.Renderer(camera_mode='look', image_size=self.render_size, perspective=False,
-        #                             light_intensity_directional=0, light_intensity_ambient=1)
-        #
-        # self.renderer = torch.nn.DataParallel(self.renderer, opt.gpu_ids, output_device=opt.gpu_ids[0])
-        # self.current_gpu = opt.gpu_ids[1]
-        # with torch.cuda.device(self.current_gpu):
-        #     self.u_cuda = torch.from_numpy(u.astype(np.float32)).cuda()
-        #     self.w_shp_cuda = torch.from_numpy(w_shp.astype(np.float32)).cuda()
-        #     self.w_exp_cuda = torch.from_numpy(w_exp.astype(np.float32)).cuda()
 
     def random_p(self, s, angle):
 
@@ -312,18 +297,6 @@ class Render(object):
         vertices2[:2, :] = R.mm(vertices2[:2, :]) + t.repeat(v_size[1], 1).t()
         return vertices2
 
-    def generate_colors(self, tex_para):
-        '''
-        Args:
-            tex_para: (n_tex_para, 1)
-        Returns:
-            colors: (nver, 3)
-        '''
-        colors = self.texMU + self.texPC.dot(tex_para*self.texEV)
-        colors = np.reshape(colors, [int(3), int(len(colors)/3)], 'F').T/255.
-
-        return colors
-
     def generate_vertices_and_rescale_to_img(self, param, pose_noise=False,
             mean_shp=False, mean_exp=False, frontal=True, large_pose=False, 
             yaw_pose=None, pitch_pose=None):
@@ -357,7 +330,7 @@ class Render(object):
         vertices = vertices.t().unsqueeze(0)
         return vertices
 
-    def get_render_from_vertices(self, img_ori, vertices_in_ori_img, random_color=False):
+    def get_render_from_vertices(self, img_ori, vertices_in_ori_img):
         c, h, w = img_ori.size()
         img_ori = img_ori.clone().permute(1, 2, 0)
         # random_num = np.random.randint(30000, 50000)
@@ -365,15 +338,9 @@ class Render(object):
         # vertices_in_ori_img[:, 20000:random_num] = vertices_in_ori_img[:, 20000:random_num] * np.random.uniform(1.01,
         #                                                                          1.02) - np.random.uniform(0.5, 1.5)
 
-        if random_color:
-            tp = np.random.rand(self.n_tex_para, 1)
-            textures = self.generate_colors(tp)
-            r, g, b = np.split(textures, 3, axis=1)
-            textures = np.concatenate((b, g, r), axis=1)
-            textures = torch.from_numpy(textures).float()
-        else:
-            textures = img_ori[vertices_in_ori_img[1, :].round().clamp(0, h - 1).long(), \
-                       vertices_in_ori_img[0, :].round().clamp(0, w - 1).long(), :]
+        
+        textures = img_ori[vertices_in_ori_img[1, :].round().clamp(0, h - 1).long(), \
+                   vertices_in_ori_img[0, :].round().clamp(0, w - 1).long(), :]
 
         N = textures.shape[0]
         with torch.cuda.device(self.current_gpu):
@@ -385,7 +352,7 @@ class Render(object):
         return tex_a
 
 
-    def _forward(self, param_file, img_ori, M=None, random_color=False,
+    def _forward(self, param_file, img_ori, M=None,
                  pose_noise=True, mean_exp=False, mean_shp=False, align=True, frontal=True, 
                  large_pose=False, yaw_pose=None, pitch_pose=None):
         '''
@@ -443,15 +410,13 @@ class Render(object):
 
         # original image size is 400 * 400 * 3
         vertices_out = vertices.clone()
-        tex_a = self.get_render_from_vertices(img_ori, vertices_in_ori_img, random_color)
+        tex_a = self.get_render_from_vertices(img_ori, vertices_in_ori_img)
         vertices = self.flip_normalize_vertices(vertices)
         vertices_in_ori_img[:2, :] = vertices_in_ori_img[:2,
                                      :] / h * self.render_size
         return tex_a, vertices, vertices_out, vertices_in_ori_img, align_vertices, original_angle
-    #
-    # def rerender(self, ):
 
-    def rotate_render(self, params, images, M=None, with_BG=False, random_color=False, pose_noise=False, large_pose=False, 
+    def rotate_render(self, params, images, M=None, with_BG=False, pose_noise=False, large_pose=False, 
                       align=True, frontal=True, erode=True, grey_background=False, avg_BG=True,
                       yaw_pose=None, pitch_pose=None):
         
@@ -473,7 +438,7 @@ class Render(object):
         with torch.no_grad():
             for n in range(bz):
                 tex_a, vertice, vertice_out, vertice_in_ori_img, align_vertice, original_angle\
-                    = self._forward(params[n], images[n], M[n], random_color,
+                    = self._forward(params[n], images[n], M[n],
                                     pose_noise=pose_noise, align=align, frontal=frontal,
                                     large_pose=large_pose, yaw_pose=yaw_pose, pitch_pose=pitch_pose)
                 vertices.append(vertice)

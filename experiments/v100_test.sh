@@ -3,7 +3,7 @@ python -u test_multipose.py  \
         --dataset example \
         --list_start 0 \
         --list_end  10 \
-        --dataset_mode single \
+        --dataset_mode allface \
         --gpu_ids 0,1 \
         --netG rotatespade \
         --norm_G spectralsyncbatch \
@@ -20,6 +20,6 @@ python -u test_multipose.py  \
         --label_mask \
         --align \
         --erode_kernel 21 \
-        --yaw_poses 0 \
-        --pitch_poses 0 \
+        --yaw_poses 0 0.17 \
+        --pitch_poses 0 0.17 \
 
