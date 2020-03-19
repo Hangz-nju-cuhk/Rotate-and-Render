@@ -22,7 +22,7 @@ pip install -r requirements.txt
 2. Install the [Neural_Renderer](https://github.com/hiroharu-kato/neural_renderer) following the instructions.
 
 
-3. Our 3D reliances are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it.
+3. Our 3D models are borrowed from [3DDFA](https://github.com/cleardusk/3DDFA). Download checkpoint and BFM model from [ckpt_and_bfm.zip](https://drive.google.com/file/d/1v31SOrGYueeDi2SxOAUuKWqnglEP0xwA/view?usp=sharing) and put it to ```3ddfa``` and unzip it.
 
 
 ## DEMO
@@ -87,4 +87,4 @@ The usage of this software is under [CC-BY-4.0](https://github.com/Hangz-nju-cuh
 ## Acknowledgement
 * The structure of this codebase is borrowed from [SPADE](https://github.com/NVlabs/SPADE).
 * The [SyncBN](https://github.com/vacancy/Synchronized-BatchNorm-PyTorch) module is used in our code.
-* We directly borrow the [3DDFA](https://github.com/cleardusk/3DDFA) implementation.
+* We directly borrow the [3DDFA](https://github.com/cleardusk/3DDFA) implementation for 3D reconstruction.
