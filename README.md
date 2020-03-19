@@ -35,7 +35,7 @@ and put it in ```./checkpoints/rs_model```.
 
 * Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired radians (range -pi/2 to pi/2), choose 0 as frontal face.
 
-* Run ```bash experiments/v100_test.sh```, results will be saved at ```./results/```
+* Run ```bash experiments/v100_test.sh```, results will be saved at ```./results/```.
 
 ## DEVELOP
 
@@ -43,7 +43,7 @@ Prepare your own dataset for testing and training.
 
 ### Preprocessing
 
-1. Save the 3D params of human faces to ```3ddfa/results``` by 3ddfa 
+1. Save the 3D params of human faces to ```3ddfa/results``` by 3ddfa.
 ```bash
 cd 3ddfa
 python inference.py --img_list example/file_list.txt --img_prefix example/Images --save_dir results
