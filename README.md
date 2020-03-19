@@ -31,7 +31,7 @@ pip install -r requirements.txt
 1. Download the [checkpoint](https://drive.google.com/file/d/1Vdlpwghjo4a9rOdn2iJEVlPd0EJegAex/view?usp=sharing)
 and put it in ```./checkpoints/rs_model```.
 
-2. Run a simple Rotate-and-Render demo, the inputs are at ```3ddfa/examples```.
+2. Run a simple Rotate-and-Render demo, the inputs are stored at ```3ddfa/example```.
 
 * Modify ```experiments/v100_test.sh```, the ```--poses``` are the desired radians (range -pi/2 to pi/2), choose 0 as frontal face.
 
