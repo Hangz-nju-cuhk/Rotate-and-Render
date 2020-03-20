@@ -25,8 +25,7 @@ python -u train.py  \
         --chunk_size 2 4 4 4 4 \
         --no_gaussian_landmark \
         --landmark_align \
-        --erode_kernel 15 \
+        --erode_kernel 19 \
         --pose_noise \
-        # --face_vgg \
         # --G_pretrain_path ./checkpoints/rs_model/latest_net_G.pth \
         # --D_pretrain_path ./checkpoints/rs_model/latest_net_D.pth \
