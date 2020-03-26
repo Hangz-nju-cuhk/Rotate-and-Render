@@ -52,7 +52,7 @@ cd ..
 
 ### Data Preparation
 
-Modity  ```class dataset_info()``` inside ```data/__ini__.py```, then prepare dataset according to the pattern of the existing example.
+Modify  ```class dataset_info()``` inside ```data/__ini__.py```, then prepare dataset according to the pattern of the existing example.
 You can add the information about a new dataset to each instance of the class.
 
 1. ```prefix``` The absolute path to the dataset.
