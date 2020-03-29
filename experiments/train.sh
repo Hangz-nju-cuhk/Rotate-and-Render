@@ -3,7 +3,6 @@ python -u train.py  \
         --dataset_mode allface \
         --load_size 400 \
         --crop_size 256 \
-        --gpu_ids 0,1,2,3,4,5,6,7 \
         --netG rotatespade \
         --trainer rotatespade \
         --norm_D spectralsyncbatch \
