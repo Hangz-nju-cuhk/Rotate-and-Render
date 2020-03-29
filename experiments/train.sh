@@ -18,7 +18,6 @@ python -u train.py  \
         --no_html \
         --load_separately \
         --heatmap_size 2.5 \
-        --heatmap_size 2.5 \
         --device_count 8 \
         --render_thread 3 \
         --chunk_size 2 4 4 4 4 \
