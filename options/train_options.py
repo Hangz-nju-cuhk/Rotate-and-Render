@@ -49,14 +49,12 @@ class TrainOptions(BaseOptions):
         parser.add_argument('--lambda_feat', type=float, default=10.0, help='weight for feature matching loss')
         parser.add_argument('--lambda_image', type=float, default=1.0, help='weight for image reconstruction')
         parser.add_argument('--lambda_vgg', type=float, default=10.0, help='weight for vgg loss')
-        parser.add_argument('--l2_margin', type=float, default=1, help='l2_margin')
         parser.add_argument('--no_ganFeat_loss', action='store_true', help='if specified, do *not* use discriminator feature matching loss')
         parser.add_argument('--no_vgg_loss', action='store_true', help='if specified, do *not* use VGG feature matching loss')
-        parser.add_argument('--face_vgg', action='store_true', help='if specified, use VGG feature matching loss')
-        parser.add_argument('--vggface_checkpoint', type=str, default='', help='pth to vggface ckpt')
+        # parser.add_argument('--face_vgg', action='store_true', help='if specified, use VGG feature matching loss')
+        # parser.add_argument('--vggface_checkpoint', type=str, default='', help='pth to vggface ckpt')
         parser.add_argument('--gan_mode', type=str, default='hinge', help='(ls|original|hinge)')
         parser.add_argument('--netD', type=str, default='multiscale', help='(n_layers|multiscale|image|projection)')
         parser.add_argument('--no_TTUR', action='store_true', help='Use TTUR training scheme')
-        parser.add_argument('--lambda_kld', type=float, default=0.05)
         self.isTrain = True
         return parser
