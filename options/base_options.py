@@ -17,10 +17,10 @@ class BaseOptions():
         # experiment specifics
         parser.add_argument('--name', type=str, default='mesh2face', help='name of the experiment. It decides where to store samples and models')
 
-        parser.add_argument('--gpu_ids', type=str, default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
+        parser.add_argument('--gpu_ids', type=str, default='0', help='useless')
         parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints', help='models are saved here')
-        parser.add_argument('--model', type=str, default='rotate', help='which model to use')
-        parser.add_argument('--trainer', type=str, default='rotate', help='which trainer to use')
+        parser.add_argument('--model', type=str, default='rotate', help='which model to use, rotate|rotatespade')
+        parser.add_argument('--trainer', type=str, default='rotate', help='which trainer to use, rotate|rotatespade')
         parser.add_argument('--norm_G', type=str, default='spectralinstance', help='instance normalization or batch normalization')
         parser.add_argument('--norm_D', type=str, default='spectralinstance', help='instance normalization or batch normalization')
         parser.add_argument('--norm_E', type=str, default='spectralinstance', help='instance normalization or batch normalization')
