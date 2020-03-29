@@ -28,7 +28,7 @@ class BaseOptions():
         
         parser.add_argument('--device_count', type=int, default=8, help='the total number of gpus to use')
         parser.add_argument('--render_thread', type=int, default=2, help='number of gpus used for rendering')
-        parser.add_argument('--chunk_size', default=None, type=int, nargs='+', help='specify the batch size on each training gpu. Training gpu # = device_count - render_size')
+        parser.add_argument('--chunk_size', default=None, type=int, nargs='+', help='specify the batch size on each training gpu. Training gpu # = device_count - render_thread')
         # input/output sizes
         # parser.add_argument('--batchSize', type=int, default=1, help='input batch size')
         parser.add_argument('--preprocess_mode', type=str, default='resize_and_crop', help='scaling and cropping of images at load time.', choices=("resize_and_crop", "crop", "scale_width", "scale_width_and_crop", "scale_shortside", "scale_shortside_and_crop", "fixed", "none"))
@@ -66,7 +66,7 @@ class BaseOptions():
         parser.add_argument('--no_instance', action='store_true', default='True', help='if specified, do *not* add instance map as input')
         parser.add_argument('--nef', type=int, default=16, help='# of encoder filters in the first conv layer')
 
-        parser.add_argument('--no_gaussian_landmark', action='store_true', help='whether to use no_gaussian_landmark (1.0 landmark)')
+        parser.add_argument('--no_gaussian_landmark', action='store_true', help='whether to use no_gaussian_landmark (1.0 landmark) for rotatespade model')
         parser.add_argument('--label_mask', action='store_true', help='whether to use face mask')
         parser.add_argument('--heatmap_size', type=float, default=3, help='the size of the heatmap')
         parser.add_argument('--erode_kernel', type=int, default=21, help='erode kernel size')
