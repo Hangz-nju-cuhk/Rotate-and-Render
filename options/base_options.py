@@ -68,8 +68,8 @@ class BaseOptions():
 
         parser.add_argument('--no_gaussian_landmark', action='store_true', help='whether to use no_gaussian_landmark (1.0 landmark) for rotatespade model')
         parser.add_argument('--label_mask', action='store_true', help='whether to use face mask')
-        parser.add_argument('--heatmap_size', type=float, default=3, help='the size of the heatmap')
-        parser.add_argument('--erode_kernel', type=int, default=21, help='erode kernel size')
+        parser.add_argument('--heatmap_size', type=float, default=3, help='the size of the heatmap, used in rotatespade model')
+        parser.add_argument('--erode_kernel', type=int, default=21, help='erode kernel size, used in renderer')
 
         self.initialized = True
         return parser
