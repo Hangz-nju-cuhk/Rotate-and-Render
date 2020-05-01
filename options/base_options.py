@@ -97,7 +97,8 @@ class BaseOptions():
         opt, unknown = parser.parse_known_args()
 
         # if there is opt_file, load it.
-        # The previous default options will be overwritten
+        # The previous defau
+        lt options will be overwritten
         if opt.load_from_opt_file:
             parser = self.update_options_from_file(parser, opt)
 
@@ -172,8 +173,7 @@ class BaseOptions():
 
         # Set semantic_nc based on the option.
         # This will be convenient in many places
-        opt.semantic_nc = opt.label_nc + \
-            (3 if opt.use_BG else 0)
+        opt.semantic_nc = opt.label_nc 
 
         # set gpu ids
         str_ids = opt.gpu_ids.split(',')
