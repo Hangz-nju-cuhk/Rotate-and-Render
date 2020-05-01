@@ -33,8 +33,6 @@ class RotateSPADEModel(torch.nn.Module):
             self.criterionFeat = torch.nn.L1Loss()
             if not opt.no_vgg_loss:
                 self.criterionVGG = networks.VGGLoss(self.opt)
-            if opt.use_vae:
-                self.KLDLoss = networks.KLDLoss()
 
     def landmark_68_to_5(self, t68):
         le = t68[36:42, :].mean(axis=0, keepdims=True)
