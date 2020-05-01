@@ -21,7 +21,7 @@ class RotateModel(torch.nn.Module):
         self.real_image = torch.zeros(opt.batchSize, 3, opt.crop_size, opt.crop_size)
         self.input_semantics = torch.zeros(opt.batchSize, 3, opt.crop_size, opt.crop_size)
 
-        self.netG, self.netD, self.netE, self.netD_rotate = self.initialize_networks(opt)
+        self.netG, self.netD, self.netD_rotate = self.initialize_networks(opt)
 
 
         # set loss functions
@@ -63,21 +63,16 @@ class RotateModel(torch.nn.Module):
             d_loss = self.compute_discriminator_loss(
                 rotated_mesh, real_image, self.netD_rotate, lambda_D=self.opt.lambda_rotate_D)
             return d_loss
-        elif mode == 'encode_only':
-            z, mu, logvar = self.encode_z(real_image)
-            return mu, logvar
         elif mode == 'inference':
             with torch.no_grad():
-                fake_image, _ = self.generate_fake(input_semantics, real_image)
-                fake_rotate, _ = self.generate_fake(rotated_mesh, real_image)
+                fake_image = self.generate_fake(input_semantics, real_image)
+                fake_rotate = self.generate_fake(rotated_mesh, real_image)
             return fake_image, fake_rotate
         else:
             raise ValueError("|mode| is invalid")
 
     def create_optimizers(self, opt):
         G_params = list(self.netG.parameters())
-        if opt.use_vae:
-            G_params += list(self.netE.parameters())
         if opt.isTrain:
             if opt.train_rotate:
                 D_params = list(self.netD.parameters()) + list(self.netD_rotate.parameters())
@@ -102,8 +97,6 @@ class RotateModel(torch.nn.Module):
         util.save_network(self.netD, 'D', epoch, self.opt)
         if self.opt.train_rotate:
             util.save_network(self.netD_rotate, 'D_rotate', epoch, self.opt)
-        if self.opt.use_vae:
-            util.save_network(self.netE, 'E', epoch, self.opt)
 
     ############################################################################
     # Private helper methods
@@ -116,15 +109,12 @@ class RotateModel(torch.nn.Module):
         netG = networks.define_G(opt)
         netD = networks.define_D(opt) if opt.isTrain else None
         netD_rotate = networks.define_D(opt) if opt.isTrain else None
-        netE = networks.define_E(opt) if opt.use_vae else None
         pretrained_path = ''
         if not opt.isTrain or opt.continue_train:
             self.load_network(netG, 'G', opt.which_epoch, pretrained_path)
             if opt.isTrain and not opt.noload_D:
                 self.load_network(netD, 'D', opt.which_epoch, pretrained_path)
                 self.load_network(netD_rotate, 'D_rotate', opt.which_epoch, pretrained_path)
-            if opt.use_vae:
-                self.load_network(netE, 'E', opt.which_epoch, pretrained_path)
         else:
 
             if opt.load_separately:
@@ -132,10 +122,8 @@ class RotateModel(torch.nn.Module):
                 if not opt.noload_D:
                     netD = self.load_separately(netD, 'D', opt)
                     netD_rotate = self.load_separately(netD_rotate, 'D_rotate', opt)
-                if opt.use_vae:
-                    netE = self.load_separately(netE, 'E', opt)
 
-        return netG, netD, netE, netD_rotate
+        return netG, netD, netD_rotate
 
     # preprocess the input, such as moving the tensors to GPUs and
     # transforming the label map to one-hot encoding
@@ -143,11 +131,8 @@ class RotateModel(torch.nn.Module):
     def compute_generator_loss(self, input_semantics, real_image, netD, mode, no_ganFeat_loss=False, no_vgg_loss=False, lambda_D=1):
         G_losses = {}
 
-        fake_image, KLD_loss = self.generate_fake(
-            input_semantics, real_image, compute_kld_loss=self.opt.use_vae)
-
-        if self.opt.use_vae:
-            G_losses['KLD'] = KLD_loss
+        fake_image = self.generate_fake(
+            input_semantics, real_image)
 
         pred_fake, pred_real = self.discriminate(
             input_semantics, fake_image, real_image, netD)
@@ -182,7 +167,7 @@ class RotateModel(torch.nn.Module):
     def compute_discriminator_loss(self, input_semantics, real_image, netD, lambda_D=1):
         D_losses = {}
         with torch.no_grad():
-            fake_image,  _ = self.generate_fake(input_semantics, real_image)
+            fake_image = self.generate_fake(input_semantics, real_image)
             fake_image = fake_image.detach()
             fake_image.requires_grad_()
 
@@ -197,25 +182,12 @@ class RotateModel(torch.nn.Module):
 
         return D_losses
 
-    def encode_z(self, real_image):
-        mu, logvar = self.netE(real_image)
-        z = self.reparameterize(mu, logvar)
-        return z, mu, logvar
-
-    def generate_fake(self, input_semantics, real_image,compute_kld_loss=False):
+    def generate_fake(self, input_semantics, real_image):
         z = None
-        KLD_loss = None
-        if self.opt.use_vae:
-            z, mu, logvar = self.encode_z(real_image)
-            if compute_kld_loss:
-                KLD_loss = self.KLDLoss(mu, logvar) * self.opt.lambda_kld
 
         fake_image = self.netG(input_semantics, z=z)
 
-        assert (not compute_kld_loss) or self.opt.use_vae, \
-            "You cannot compute KLD loss if opt.use_vae == False"
-
-        return fake_image, KLD_loss
+        return fake_image
 
     # Given fake and real image, return the prediction of discriminator
     # for each fake and real image.
