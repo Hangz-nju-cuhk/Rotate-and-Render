@@ -31,8 +31,6 @@ class RotateModel(torch.nn.Module):
             self.criterionFeat = torch.nn.L1Loss()
             if not opt.no_vgg_loss:
                 self.criterionVGG = networks.VGGLoss(self.opt)
-            if opt.use_vae:
-                self.KLDLoss = networks.KLDLoss()
 
     # Entry point for all calls involving forward pass
     # of deep networks. We used this approach since DataParallel module
