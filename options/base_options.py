@@ -94,8 +94,7 @@ class BaseOptions():
         opt, unknown = parser.parse_known_args()
 
         # if there is opt_file, load it.
-        # The previous defau
-        lt options will be overwritten
+        # lt options will be overwritten
         if opt.load_from_opt_file:
             parser = self.update_options_from_file(parser, opt)
 
