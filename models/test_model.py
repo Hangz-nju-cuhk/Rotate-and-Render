@@ -29,7 +29,7 @@ class TestModel(RotateSPADEModel):
                 rotated_mesh = (rotated_mesh + rotated_seg_all[:, 4].unsqueeze(1) + rotated_seg_all[:, 0].unsqueeze(1))
                 rotated_mesh[rotated_mesh >= 1] = 0
             with torch.no_grad():
-                fake_rotate, _ = self.generate_fake(rotated_mesh, real_image, self.rotated_seg)
+                fake_rotate = self.generate_fake(rotated_mesh, real_image, self.rotated_seg)
 
             return fake_rotate
 
@@ -44,7 +44,6 @@ class TestModel(RotateSPADEModel):
 
             input_semantics = data['mesh']
             rotated_mesh = data['rotated_mesh']
-            BG = data['BG']
 
             if self.opt.label_mask:
                 input_semantics = (input_semantics + orig_seg_all[:, 4].unsqueeze(1) + orig_seg_all[:, 0].unsqueeze(1))
@@ -57,8 +56,8 @@ class TestModel(RotateSPADEModel):
                     rotated_mesh = (
                             rotated_mesh + rotated_seg_all[:, 4].unsqueeze(1) + rotated_seg_all[:, 0].unsqueeze(1))
                     rotated_mesh[rotated_mesh >= 1] = 0
-                fake_image, _ = self.generate_fake(input_semantics, real_image, self.orig_seg)
-                fake_rotate, _ = self.generate_fake(rotated_mesh, real_image, self.rotated_seg)
+                fake_image = self.generate_fake(input_semantics, real_image, self.orig_seg)
+                fake_rotate = self.generate_fake(rotated_mesh, real_image, self.rotated_seg)
 
             return fake_image, fake_rotate
 
