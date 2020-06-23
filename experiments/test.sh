@@ -1,5 +1,5 @@
 python -u test_frontal.py  \
-        --names rs_ijba3 \
+        --names rs_model \
         --dataset megafaceprobe \
         --list_start 0 \
         --list_end 5000 \
