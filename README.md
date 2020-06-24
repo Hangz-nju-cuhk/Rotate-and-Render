@@ -72,6 +72,8 @@ For example the folder_level is 2 if a image is stored as ```prefix/label/image.
 
 ## Details of the Models
 
+<img src='./misc/teaser.gif' width=400>
+
 We provide two models with trainers in this repo, namely ```rotate``` and ```rotatespade```. The "rotatespade" model is an upgraded one which is different from that described in our paper. A conditional batchnorm module is added according to landmarks predicted from the 3D face. Our checkpoint is trained on this model. We have briefly described this model in our supplementary materials.
 
 ## License and Citation
