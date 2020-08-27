@@ -115,16 +115,11 @@ class RotateSPADEGenerator(RotateGenerator):
             self.add_module('resnet_layers' + str(i), ResnetSPADEBlock(opt.ngf * mult, opt.semantic_nc))
 
     def forward(self, input, seg=None):
-        # net = self.first_layer(input)
-        net = checkpoint(self.first_layer, input)
-        # net = self.downsample_layers(net)
-        net = checkpoint(self.downsample_layers, net)
+        net = self.first_layer(input)
+        net = self.downsample_layers(net)
         for i in range(self.resnet_n_blocks):
-            # net = self._modules['resnet_layers' + str(i)](net, seg)
-            net = checkpoint(self._modules['resnet_layers' + str(i)], net, seg)
-        # net = self.upsample_layers(net)
-        net = checkpoint(self.upsample_layers, net)
-        # net = self.final_layer(net)
-        net = checkpoint(self.final_layer, net)
+            net = self._modules['resnet_layers' + str(i)](net, seg)
+        net = self.upsample_layers(net)
+        net = self.final_layer(net)
         return net
     
